@@ -5,8 +5,9 @@ Run `yarn start` to run the app in development mode.
 <!-- TODO: Or visit the deployed site.-->
 
 ## Styling (CSS in JS)
-typed camelCase css objects
-using JSX-Pragma `/** @jsx jsx */` (and a [`jsx;` statement](https://stackoverflow.com/questions/54006540/emotion-js-with-create-react-app-referenceerror-jsx-is-not-defined))
+typed camelCase css objects using JSX-Pragma `/** @jsx jsx */`
+
+(additionally a `jsx;` statement workaround: [emotion-js/emotion#1112](https://github.com/emotion-js/emotion/issues/1112))
 
 see https://emotion.sh/docs/object-styles
 
