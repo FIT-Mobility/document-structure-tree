@@ -1,11 +1,6 @@
-/** @jsx jsx */
-
 import React, { useState } from 'react';
-import { jsx } from '@emotion/core';
 
 import Node, { NodeProps } from './Node';
-
-jsx;
 
 export interface TreeProps {
     title: string,

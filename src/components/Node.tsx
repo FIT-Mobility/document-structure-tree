@@ -1,10 +1,6 @@
-/** @jsx jsx */
+import React, {useState} from 'react';
 
-import React from 'react';
-import { jsx } from '@emotion/core';
-import { emitKeypressEvents } from 'readline';
-
-jsx;
+import './Node.scss';
 
 export enum layers {
     Project = '📚 Project',
@@ -15,35 +11,41 @@ export enum layers {
 }
 
 export interface NodeProps {
-    collapsed: boolean,
     id: string,
     layer: layers,
-    nodes: NodeProps[],
     title: string,
+    collapsed?: boolean,
+    nodes?: NodeProps[],
 }
 
-const Node: React.FunctionComponent<NodeProps> = (props) => (
-    <div
-        key={props.id}
-        css={({
-            width: '100%',
-            paddingLeft: 16,
-        })}
-    >
-        {props.collapsed ? '▶️' : '🔽'}
-        <i>{props.layer}</i>
-        <b
-            css={({
-                paddingLeft: 8,
-            })}
-        >{props.title}</b>
-        {
-            !props.collapsed &&
-            props.nodes.map(node => (
-                <Node {...node}/>
-            ))
-        }
-    </div>
-)
+const Node: React.FunctionComponent<NodeProps> = (props) => {
+    const [collapsed, setCollapsed] = useState(props.collapsed);
+
+    return (
+        <div
+            className='node'
+            key={props.id}
+        >
+            <span
+                onClick = {() => setCollapsed(!collapsed)}
+            >
+                {collapsed ? '▶️' : '🔽'}
+            </span>
+            <span
+                className='layer'
+            >
+                {props.layer}
+            </span>
+            <b className='title'>
+                {props.title}
+            </b>
+            {!collapsed && (
+                props.nodes!.map(node => (
+                    <Node {...node}/>
+                ))
+            )}
+        </div>
+    );
+}
 
 export default Node;
