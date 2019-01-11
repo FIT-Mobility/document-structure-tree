@@ -3,41 +3,24 @@
 import React, { useState } from 'react';
 import { jsx } from '@emotion/core';
 
+import Node, { NodeProps } from './Node';
+
 jsx;
 
-interface TreeNodeProps {
-    id: string;
-    content: string;
-    nodes: TreeNodeProps[];
+export interface TreeProps {
+    title: string,
+    nodes: NodeProps[],
 }
 
-const TreeNode: React.FunctionComponent<TreeNodeProps> = (props) => (
-    <p
-        key={props.id}
-        css={({
-            width: '100%',
-            paddingLeft: 16,
-        })}
-    >
-        {props.content}
-        {
-            props.nodes.map(node => (
-                <TreeNode {...node}/>
-            ))
-        }
-    </p>
-);
-
-
-const Tree: React.FunctionComponent<TreeNodeProps> = (props) => (
+const Tree: React.FunctionComponent<TreeProps> = (props) => (
     <>
-        <h1>{props.content}</h1>
+        <h1>{props.title}</h1>
         {
             props.nodes.map(node => (
-                <TreeNode {...node}/>
+                <Node {...node}/>
             ))
         }
     </>
-);
+)
 
 export default Tree;

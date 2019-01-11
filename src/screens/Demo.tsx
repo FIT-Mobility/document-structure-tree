@@ -1,27 +1,27 @@
 import React from 'react';
-import Tree from '../components/Tree';
+import Tree, { TreeProps } from '../components/Tree';
+
+import { layers } from '../components/Node';
 
 // TODO: random generator interface
 
-const demoNode = {
-    id: '0',
-    content: 'test 1',
+const demoNode: TreeProps = {
+    title: 'Demo Tree',
     nodes: [
         {
+            collapsed: false,
             id: '0',
-            content: '1st child of test',
+            layer: layers.Project,
             nodes: [
                 {
+                    collapsed: true,
                     id: '0',
-                    content: 'child of 1st child of test',
+                    layer: layers.Service,
                     nodes: [],
+                    title: 'some service'
                 },
             ],
-        },
-        {
-            id: '1',
-            content: '2nd child of test',
-            nodes: [],
+            title: 'Demo Project',
         },
     ],
 }
