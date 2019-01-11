@@ -1,6 +1,8 @@
 import React from 'react';
 import Tree from '../components/Tree';
 
+// TODO: random generator interface
+
 const demoNode = {
     id: '0',
     content: 'test 1',
