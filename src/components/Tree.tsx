@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import Node, { NodeProps } from './Node';
 
-export interface TreeProps {
+export interface TreeProps<Layer> {
     title: string,
-    nodes: NodeProps[],
+    nodes: NodeProps<Layer>[],
 }
 
 const Tree: React.FunctionComponent<TreeProps> = (props) => (

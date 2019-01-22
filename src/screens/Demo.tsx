@@ -9,19 +9,16 @@ const demoNode: TreeProps = {
     title: 'Demo Tree',
     nodes: [
         {
-            collapsed: false,
             id: '0',
             layer: layers.Project,
+            title: 'Demo Project',
             nodes: [
                 {
-                    collapsed: true,
                     id: '0',
                     layer: layers.Service,
-                    nodes: [],
                     title: 'some service'
                 },
             ],
-            title: 'Demo Project',
         },
     ],
 }

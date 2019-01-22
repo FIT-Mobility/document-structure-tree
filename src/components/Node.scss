@@ -1,13 +1,13 @@
 .node{
     width: 100%;
-    padding-left: 16px;
+    padding-left: 1em;
 
     .layer{
-        padding-left: 4px;
-        padding-right: 8px;
+        padding-right: 1em;
+        font-style: italic;
     }
 
     .title{
-        padding-left: 2px;
+        font-weight: bold;
     }
 }

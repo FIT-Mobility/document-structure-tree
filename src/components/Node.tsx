@@ -2,6 +2,13 @@ import React, {useState} from 'react';
 
 import './Node.scss';
 
+interface Layer {
+    id: string,
+    name: string,
+    symbol: string,
+    childLayers: Layer,
+}
+
 export enum layers {
     Project = '📚 Project',
     Service = 'Service',
@@ -10,16 +17,15 @@ export enum layers {
     Response = 'Response',
 }
 
-export interface NodeProps {
+export interface NodeProps<Layer> {
     id: string,
-    layer: layers,
+    layer: Layer,
     title: string,
-    collapsed?: boolean,
-    nodes?: NodeProps[],
+    nodes?: NodeProps<Layer>[],
 }
 
-const Node: React.FunctionComponent<NodeProps> = (props) => {
-    const [collapsed, setCollapsed] = useState(props.collapsed);
+const Node: React.FunctionComponent<NodeProps<Layer>> = (props) => {
+    const [collapsed, setCollapsed] = useState(false);
 
     return (
         <div
@@ -36,11 +42,11 @@ const Node: React.FunctionComponent<NodeProps> = (props) => {
             >
                 {props.layer}
             </span>
-            <b className='title'>
+            <span className='title'>
                 {props.title}
-            </b>
-            {!collapsed && (
-                props.nodes!.map(node => (
+            </span>
+            {!collapsed && props.nodes && (
+                props.nodes.map(node => (
                     <Node {...node}/>
                 ))
             )}
