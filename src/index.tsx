@@ -13,8 +13,21 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { create } from 'jss';
+import { jssPreset } from '@material-ui/core/styles';
+import JssProvider from 'react-jss/lib/JssProvider';
 
 import './index.scss';
+
+const jss = create({
+   ...jssPreset(),
+   insertionPoint: document.getElementById('jss-insertion-point') || 'jss-insertion-point',
+});
+const Index: React.FunctionComponent = () => (
+   <JssProvider jss={jss}>
+      <NestedList/>
+   </JssProvider>
+);
 
 const NestedList: React.FunctionComponent = () => {
    const [open, setOpen] = useState(true);
@@ -46,7 +59,6 @@ const NestedList: React.FunctionComponent = () => {
             in={open}
             timeout='auto'
             unmountOnExit
-            className='beta'
          >
             <List
                disablePadding
@@ -64,4 +76,4 @@ const NestedList: React.FunctionComponent = () => {
    );
 }
 
-ReactDOM.render(<NestedList/>, document.getElementById('root'));
+ReactDOM.render(<Index/>, document.getElementById('root'));
