@@ -17,10 +17,10 @@ const Tree: React.FC<TreeProps> = (props) => {
     return <List className='list' id={props.entry.id} disablePadding>
         <ListItem button onClick={() => {setOpen(!open)}}>
             <ListItemText primary={props.entry.title}/>
-            {open
+            {props.entry.childEntries && (open
                 ? <ExpandLess/>
                 : <ExpandMore/>
-            }
+            )}
         </ListItem>
         {props.entry.childEntries &&
             <Collapse in={open}>
