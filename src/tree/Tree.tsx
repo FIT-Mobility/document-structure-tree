@@ -1,6 +1,6 @@
 import React from "react";
 import Entry from "./Entry";
-import { Collapse, List, ListItem, ListItemText } from "@material-ui/core";
+import { Collapse, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { useState } from 'react';
 
@@ -17,6 +17,9 @@ const Tree: React.FC<TreeProps> = (props) => {
 
     return <List className='list' id={props.entry.id} disablePadding>
         <ListItem button onClick={() => {setOpen(!open)}}>
+            <ListItemIcon>
+                { React.createElement(props.entry.icon) }
+            </ListItemIcon>
             <ListItemText primary={props.entry.title}/>
             {props.childEntries && (open
                 ? <ExpandLess/>

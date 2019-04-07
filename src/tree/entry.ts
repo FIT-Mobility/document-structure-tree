@@ -2,8 +2,8 @@ import React from 'react';
 import { Book, Functions } from '@material-ui/icons';
 
 export default abstract class Entry {
-    static structure: string;
-    static icon: React.ComponentType;
+    abstract readonly structure: string;
+    abstract readonly icon: React.ComponentType;
 
     constructor (
         readonly id: string,
