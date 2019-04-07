@@ -1,31 +1,21 @@
 import React from "react";
-import entry from "../tree/entry";
-import Tree from "../tree/Tree";
+import { FunctionEntry, ProjectEntry } from "../tree/Entry";
+import Tree, { TreeProps } from "../tree/Tree";
 
-const demoData: entry = {
-    type: 'project',
-    id: '0',
-    title: 'top element',
-
-    childEntries: [{
-        type: 'service',
-        id: '0',
-        title: 'first child of top element',
-
-        childEntries: [{
-            type: 'service',
-            id: '0',
-            title: 'first child of first child',
-        }]
-    }, {
-        type: 'service',
-        id: '1',
-        title: 'second child of top element',
-    }],
+const demoData: TreeProps = {
+    entry: new ProjectEntry('0', 'root element'),
+    childEntries: [
+        {
+            entry: new FunctionEntry('0', 'first child'),
+        },
+        {
+            entry: new FunctionEntry('1', 'second child'),
+        },
+    ],
 }
 
 const DemoTree: React.FC = () => (
-    <Tree data={demoData}/>
+    <Tree {...demoData}/>
 );
 
 export default DemoTree;

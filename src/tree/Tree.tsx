@@ -1,5 +1,5 @@
 import React from "react";
-import entry from "./entry";
+import Entry from "./Entry";
 import { Collapse, List, ListItem, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { useState } from 'react';
@@ -7,26 +7,27 @@ import { useState } from 'react';
 import './Tree.scss';
 
 export interface TreeProps {
-    data: entry,
+    entry: Entry,
+    childEntries?: TreeProps[],
 }
 
 const Tree: React.FC<TreeProps> = (props) => {
 
     const [open, setOpen] = useState(true);
 
-    return <List className='list' id={props.data.id} disablePadding>
+    return <List className='list' id={props.entry.id} disablePadding>
         <ListItem button onClick={() => {setOpen(!open)}}>
-            <ListItemText primary={props.data.title}/>
-            {props.data.childEntries && (open
+            <ListItemText primary={props.entry.title}/>
+            {props.childEntries && (open
                 ? <ExpandLess/>
                 : <ExpandMore/>
             )}
         </ListItem>
-        {props.data.childEntries &&
+        {props.childEntries &&
             <Collapse in={open}>
             {
-                props.data.childEntries.map(child => (
-                    <Tree data={child}/>
+                props.childEntries.map(child => (
+                    <Tree {...child}/>
                 ))
             }
             </Collapse>
