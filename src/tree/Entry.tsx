@@ -1,12 +1,21 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { CalendarViewDay, Code, Functions, Help, LineStyle } from '@material-ui/icons';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 enum EntryType {
     Service = 'service',
     Function = 'function',
     Datatype = 'datatype',
     Textblock = 'textblock',
+}
+const EntryIcon = (type: EntryType) : typeof SvgIcon => {
+    switch (type) {
+        case EntryType.Service: return Code;
+        case EntryType.Function: return Functions;
+        case EntryType.Datatype: return CalendarViewDay;
+        case EntryType.Textblock: return LineStyle;
+    }
 }
 
 interface EntryProps {
@@ -37,25 +46,11 @@ interface TextblockEntryProps extends EntryProps {
     childtypes: [],
 }
 
-export const Entry: React.FC<EntryProps> = (props) => {
-    switch (props.type) {
-        case EntryType.Service: return (
-            <ListItem id={props.id}>
-                <ListItemIcon>
-                    <Code/>
-                </ListItemIcon>
-                <ListItemText primary={props.title}/>
-            </ListItem>
-        );
-        case EntryType.Function:
-        case EntryType.Datatype:
-        case EntryType.Textblock: return (
-            <ListItem id={props.id}>
-                <ListItemIcon>
-                    <Help/>
-                </ListItemIcon>
-                <ListItemText primary={props.title}/>
-            </ListItem>
-        );
-    }
-}
+export const Entry: React.FC<EntryProps> = (props) => (
+    <ListItem id={props.id}>
+        <ListItemIcon>
+            { React.createElement(EntryIcon(props.type)) }
+        </ListItemIcon>
+        <ListItemText primary={props.title}/>
+    </ListItem>
+);
