@@ -11,10 +11,14 @@ enum EntryType {
 }
 const EntryIcon = (type: EntryType) : typeof SvgIcon => {
     switch (type) {
-        case EntryType.Service: return Code;
-        case EntryType.Function: return Functions;
-        case EntryType.Datatype: return CalendarViewDay;
-        case EntryType.Textblock: return LineStyle;
+        case EntryType.Service:
+            return Code;
+        case EntryType.Function:
+            return Functions;
+        case EntryType.Datatype:
+            return CalendarViewDay;
+        case EntryType.Textblock:
+            return LineStyle;
     }
 }
 const EntryChildTypes = (type: EntryType) : EntryType[] => {
