@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { CalendarViewDay, Code, Functions, Help, LineStyle } from '@material-ui/icons';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
 enum EntryType {
     Service = 'service',
@@ -9,7 +9,7 @@ enum EntryType {
     Datatype = 'datatype',
     Textblock = 'textblock',
 }
-const EntryIcon = (type: EntryType) : typeof SvgIcon => {
+const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
     switch (type) {
         case EntryType.Service:
             return Code;
