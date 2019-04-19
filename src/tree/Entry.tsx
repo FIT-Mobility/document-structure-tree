@@ -17,10 +17,19 @@ const EntryIcon = (type: EntryType) : typeof SvgIcon => {
         case EntryType.Textblock: return LineStyle;
     }
 }
+const EntryChildTypes = (type: EntryType) : EntryType[] => {
+    switch (type) {
+        case EntryType.Service:
+        case EntryType.Function:
+            return [EntryType.Datatype, EntryType.Textblock];
+        case EntryType.Datatype:
+        case EntryType.Textblock:
+            return [];
+    }
+}
 
 interface EntryProps {
     type: EntryType,
-    childTypes: EntryProps[],
 
     id: string,
     title: string,
@@ -28,22 +37,18 @@ interface EntryProps {
 
 interface ServiceEntryProps extends EntryProps {
     type: EntryType.Service,
-    childTypes: (DatatypeEntryProps | TextblockEntryProps)[],
 }
 
 interface FunctionEntryProps extends EntryProps {
     type: EntryType.Function,
-    childTypes: (DatatypeEntryProps | TextblockEntryProps)[],
 }
 
 interface DatatypeEntryProps extends EntryProps {
     type: EntryType.Datatype,
-    childTypes: [],
 }
 
 interface TextblockEntryProps extends EntryProps {
     type: EntryType.Textblock,
-    childtypes: [],
 }
 
 export const Entry: React.FC<EntryProps> = (props) => (
