@@ -1,14 +1,32 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { CalendarViewDay, Code, Functions, Help, LineStyle } from '@material-ui/icons';
+import { CalendarViewDay, Code, Functions, LineStyle } from '@material-ui/icons';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
-enum EntryType {
+export interface EntryProps {
+    id: string,
+    title: string,
+    type: EntryType,
+}
+
+export enum EntryType {
     Service = 'service',
     Function = 'function',
     Datatype = 'datatype',
     Textblock = 'textblock',
 }
+
+export const EntryChildTypes = (type: EntryType) : EntryType[] => {
+    switch (type) {
+        case EntryType.Service:
+        case EntryType.Function:
+            return [EntryType.Datatype, EntryType.Textblock];
+        case EntryType.Datatype:
+        case EntryType.Textblock:
+            return [];
+    }
+}
+
 const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
     switch (type) {
         case EntryType.Service:
@@ -21,41 +39,8 @@ const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
             return LineStyle;
     }
 }
-const EntryChildTypes = (type: EntryType) : EntryType[] => {
-    switch (type) {
-        case EntryType.Service:
-        case EntryType.Function:
-            return [EntryType.Datatype, EntryType.Textblock];
-        case EntryType.Datatype:
-        case EntryType.Textblock:
-            return [];
-    }
-}
 
-interface EntryProps {
-    type: EntryType,
-
-    id: string,
-    title: string,
-}
-
-interface ServiceEntryProps extends EntryProps {
-    type: EntryType.Service,
-}
-
-interface FunctionEntryProps extends EntryProps {
-    type: EntryType.Function,
-}
-
-interface DatatypeEntryProps extends EntryProps {
-    type: EntryType.Datatype,
-}
-
-interface TextblockEntryProps extends EntryProps {
-    type: EntryType.Textblock,
-}
-
-export const Entry: React.FC<EntryProps> = (props) => (
+export const Entry: React.FunctionComponent<EntryProps> = (props: EntryProps) => (
     <ListItem id={props.id}>
         <ListItemIcon>
             { React.createElement(EntryIcon(props.type)) }
