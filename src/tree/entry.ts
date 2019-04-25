@@ -1,5 +1,4 @@
 import React from 'react';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { CalendarViewDay, Code, Functions, LineStyle } from '@material-ui/icons';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
@@ -27,7 +26,7 @@ export const EntryChildTypes = (type: EntryType) : EntryType[] => {
     }
 }
 
-const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
+export const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
     switch (type) {
         case EntryType.Service:
             return Code;
@@ -39,12 +38,3 @@ const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
             return LineStyle;
     }
 }
-
-export const Entry: React.FunctionComponent<EntryProps> = (props: EntryProps) => (
-    <ListItem id={props.id}>
-        <ListItemIcon>
-            { React.createElement(EntryIcon(props.type)) }
-        </ListItemIcon>
-        <ListItemText primary={props.title}/>
-    </ListItem>
-);
