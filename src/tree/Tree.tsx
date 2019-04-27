@@ -1,41 +1,46 @@
-import React from "react";
-import Entry from "./Entry";
+import React, { useState, useReducer } from 'react';
+import { EntryProps, EntryType, EntryChildTypes, EntryIcon } from "./entry";
 import { Collapse, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import { useState } from 'react';
 
 import './Tree.scss';
 
-export interface TreeProps {
-    entry: Entry,
-    childEntries?: TreeProps[],
+
+export interface TreeState {
+    entry: EntryProps,
+    open: boolean,
+    childs?: TreeState[];
 }
 
-const Tree: React.FC<TreeProps> = (props) => {
+export enum TreeAction {
+}
+export const TreeReducer = (state: TreeState, action: TreeAction): TreeState => {
+    switch(action) {
+    }
+    return state;
+}
 
-    const [open, setOpen] = useState(true);
-
-    return <List className='list' id={props.entry.id} disablePadding>
-        <ListItem button onClick={() => {setOpen(!open)}}>
+export interface TreeProps {
+    state: TreeState,
+    dispatch: React.Dispatch<TreeAction>,
+}
+export const Tree: React.FunctionComponent<TreeProps> = (props) => (
+    <List className='list' disablePadding>
+        <ListItem button id={props.state.entry.id} /* onClick setOpen */>
             <ListItemIcon>
-                { React.createElement(props.entry.icon) }
+                { React.createElement(EntryIcon(props.state.entry.type)) }
             </ListItemIcon>
-            <ListItemText primary={props.entry.title}/>
-            {props.childEntries && (open
+            { props.state.childs && (props.state.open
                 ? <ExpandLess/>
                 : <ExpandMore/>
             )}
         </ListItem>
-        {props.childEntries &&
-            <Collapse in={open}>
-            {
-                props.childEntries.map(child => (
-                    <Tree {...child}/>
-                ))
-            }
+        { props.state.childs &&
+            <Collapse in={props.state.open}>
+            { props.state.childs.map(child => (
+                <Tree state={child} dispatch={props.dispatch}/>
+            ))}
             </Collapse>
         }
     </List>
-}
-
-export default Tree;
+);
