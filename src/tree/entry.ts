@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarViewDay, Code, Functions, LineStyle } from '@material-ui/icons';
+import { Book, CalendarViewDay, Code, Functions, LineStyle } from '@material-ui/icons';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
 export interface EntryProps {
@@ -9,6 +9,7 @@ export interface EntryProps {
 }
 
 export enum EntryType {
+    Project = 'project',
     Service = 'service',
     Function = 'function',
     Datatype = 'datatype',
@@ -17,6 +18,8 @@ export enum EntryType {
 
 export const EntryChildTypes = (type: EntryType) : EntryType[] => {
     switch (type) {
+        case EntryType.Project:
+            return [EntryType.Service];
         case EntryType.Service:
         case EntryType.Function:
             return [EntryType.Datatype, EntryType.Textblock];
@@ -28,6 +31,8 @@ export const EntryChildTypes = (type: EntryType) : EntryType[] => {
 
 export const EntryIcon = (type: EntryType) : React.ComponentType<SvgIconProps> => {
     switch (type) {
+        case EntryType.Project:
+            return Book;
         case EntryType.Service:
             return Code;
         case EntryType.Function:
