@@ -23,6 +23,7 @@ export const TreeReducer = (state: TreeState, action: TreeAction): TreeState => 
 export interface TreeProps {
     state: TreeState,
     dispatch: React.Dispatch<TreeAction>,
+    position?: number[],
 }
 export const Tree: React.FunctionComponent<TreeProps> = (props) => (
     <List className='list' disablePadding>
@@ -37,9 +38,13 @@ export const Tree: React.FunctionComponent<TreeProps> = (props) => (
         </ListItem>
         { props.state.childs &&
             <Collapse in={props.state.open}>
-            { props.state.childs.map(child => (
-                <Tree state={child} dispatch={props.dispatch}/>
-            ))}
+            { props.state.childs.map((child, index) => (
+                <Tree
+                    state={child}
+                    dispatch={props.dispatch}
+                    position={props.position ? props.position.concat(index) : [index,]}/>
+                ))
+            }
             </Collapse>
         }
     </List>
