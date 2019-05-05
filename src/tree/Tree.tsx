@@ -13,15 +13,21 @@ export interface TreeState {
 }
 
 export type TreeAction =
+    | TreeActionAdd
     | TreeActionOpen
     | TreeActionClose
 ;
 enum TreeActionType {
+    Add = 'ADD',
     Close = 'CLOSE',
     Open = 'OPEN',
 }
 interface TreeActionProps {
     position: number[],
+}
+interface TreeActionAdd extends TreeActionProps {
+    type: TreeActionType.Add,
+    entry: EntryProps,
 }
 interface TreeActionOpen extends TreeActionProps {
     type: TreeActionType.Open,
@@ -36,16 +42,30 @@ export const TreeReducer = (state: TreeState, action: TreeAction): TreeState => 
         if (action.position[0] < 0 || action.position[0] >= state.childs.length)
             throw new RangeError(`Action accesses position ${action.position[0]} that is unreachable (${state.childs.length} childs).`);
         switch(action.type) {
-            // to position
+            case TreeActionType.Add:
+                if (action.position.length < 2) // skip next position if at parent
+                    return TreeReducer(state, {...action, position: []});
+            // to next position
             case TreeActionType.Close:
             case TreeActionType.Open:
-            if (action.position !== [] && state.childs && (action.position[0] < state.childs.length))
                 return TreeReducer(state.childs[action.position[0]], {...action, position: action.position.slice(1)});
-        // to parent
+        }
     }
 
     // manipulate state
     switch(action.type) {
+        case TreeActionType.Add:
+            if (!EntryChildTypes(state.entry.type).some(childType => childType === action.entry.type))
+                throw new TypeError(`Action adds an entry of type ${action.entry.type} which can't be child of ${state.entry.type}.`);
+            return {
+                ...state,
+                open: true,
+                childs: state.childs.concat([{
+                    entry: action.entry,
+                    open: false,
+                    childs: [],
+                },])
+            };
         case TreeActionType.Close:
             return {...state, open: false};
         case TreeActionType.Open:
