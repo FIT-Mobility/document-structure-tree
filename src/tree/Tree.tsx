@@ -9,7 +9,7 @@ import './Tree.scss';
 export interface TreeState {
     entry: EntryProps,
     open: boolean,
-    childs?: TreeState[];
+    childs: TreeState[];
 }
 
 export type TreeAction =
@@ -32,10 +32,13 @@ interface TreeActionClose extends TreeActionProps {
 
 export const TreeReducer = (state: TreeState, action: TreeAction): TreeState => {
     // navigate
-    switch(action.type) {
-        // to position
-        case TreeActionType.Close:
-        case TreeActionType.Open:
+    if (action.position !== []) {
+        if (action.position[0] < 0 || action.position[0] >= state.childs.length)
+            throw new RangeError(`Action accesses position ${action.position[0]} that is unreachable (${state.childs.length} childs).`);
+        switch(action.type) {
+            // to position
+            case TreeActionType.Close:
+            case TreeActionType.Open:
             if (action.position !== [] && state.childs && (action.position[0] < state.childs.length))
                 return TreeReducer(state.childs[action.position[0]], {...action, position: action.position.slice(1)});
         // to parent
